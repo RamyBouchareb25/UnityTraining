@@ -7,6 +7,7 @@ public class Shoot : MonoBehaviour
     public GameObject bullet;
     [SerializeField] Transform SpownPoint;
     public float shootingForce;
+    [SerializeField] AudioSource ShootSound;
 
     //Aiming
 
@@ -29,6 +30,7 @@ public class Shoot : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            ShootSound.Play();
             GameObject bul = Instantiate(bullet, SpownPoint.position, Quaternion.identity);
             Rigidbody bul_rb = bul.AddComponent<Rigidbody>();
             bul_rb.useGravity = false;

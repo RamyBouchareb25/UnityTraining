@@ -18,11 +18,11 @@ public class playerControle : MonoBehaviour
 
     public Transform Camera;
 
-    [SerializeField] AudioSource walkSound;
     [Header("Jump")]
 
     public float JumpForce;
 
+    [SerializeField] Animator playerAnimator;
     private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -41,14 +41,21 @@ public class playerControle : MonoBehaviour
         // mouvment Vector
         moveDirection = transform.forward * inputs.y  + transform.right * inputs.x ;
 
-        if(moveDirection.magnitude > 0)
+        if(moveDirection.magnitude > 0.1f)
         {
-            walkSound.Play();
+            if(mouvementSpeed < 150)
+            {
+                mouvementSpeed += Time.deltaTime * 60;
+            }
+            playerAnimator.SetBool("IsRunning", true);
         }
         else
         {
-            walkSound.Stop();
+            mouvementSpeed = 0;
+            playerAnimator.SetBool("IsRunning", false);
+
         }
+
         //move only if grounded
         if (Isgrounded)
         {
